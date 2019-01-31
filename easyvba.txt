@@ -1,0 +1,63 @@
+Sub forEachWs()
+Dim sht As Worksheet
+  
+   For Each sht In Worksheets
+       sht.Select
+       Call TotalStockVolume
+   Next
+ 
+  
+
+
+End Sub
+
+Sub TotalStockVolume()
+'declare variables
+Dim row As Double
+Dim totalValue As Double
+Dim lastRow As Double
+Dim j As Double
+
+
+
+
+'add headers for new info
+Cells(1, 12).Value = "Ticker"
+Cells(1, 13).Value = "Total Stock Value"
+
+
+
+lastRow = Cells(Rows.Count, "A").End(xlUp).row
+
+'for initial case
+
+j = 2
+Cells(j, 12).Value = Cells(j, 1).Value
+
+'define last row
+lastRow = Cells(Rows.Count, "A").End(xlUp).row
+
+
+For row = 2 To lastRow
+ticker = Cells(row, 1).Value
+    If ticker = Cells(j, 12).Value Then
+        totalValue = totalValue + Cells(row, 7).Value
+        
+    Else
+        Cells(j, 13).Value = totalValue
+        totalValue = Cells(row, 7).Value
+        j = j + 1
+        Cells(j, 12).Value = Cells(row, 1).Value
+    
+    End If
+    Next row
+    'last case
+    Cells(j, 13).Value = totalValue
+
+
+
+
+     
+End Sub
+
+
